@@ -1,0 +1,90 @@
+{% use '@PrestaShop/Admin/TwigTemplateForm/prestashop_ui_kit_base.html.twig' %}
+
+{% block form_row %}
+    {% set orders = form.vars.data %}
+    <table class="table">
+        <thead class="thead-default" id="order-history">
+          <tr>
+            <th>
+              <input type="checkbox" id="toggle-all-orders" >
+            </th>
+            <th>{{ 'Order ID'|trans({}, 'Modules.ProductOrderHisotry.Admin') }}</th>
+            <th>{{ 'Product Variant'|trans({}, 'Modules.ProductOrderHisotry.Admin') }}</th>
+            <th>{{ 'Quantity'|trans({}, 'Modules.ProductOrderHisotry.Admin') }}</th>
+            <th>{{ 'Price'|trans({}, 'Modules.ProductOrderHisotry.Admin') }}</th>
+            <th>{{ 'Order Date'|trans({}, 'Modules.ProductOrderHisotry.Admin') }}</th>
+          </tr>
+        </thead>
+        <tbody class="js-order-history-list panel-group accordion" >
+        {% set allOrders = 0 %}
+        {% set sumQuantity = 0 %}
+        {% set sumPrice = 0 %}
+        {% for order in orders %}
+                <tr class="combination loading timeline-wrapper" id="loading-attribute">
+                        <td class="timeline-item" width="1%">
+                            {{ loop.index }}
+                            {% set allOrders = allOrders + 1 %}
+                        </td>
+                        <td class="timeline-item img">
+                            <a href="{{ order.link }}">
+                                <div class="animated-background">
+                                    {{ order.order_id }}
+                                </div>
+                            </a>
+                        </td>
+                        <td class="timeline-item img">
+                            <div class="animated-background">
+                                {{ order.name_variant }}
+                            </div>
+                        </td>
+                        <td class="timeline-item img">
+                            <div class="animated-background">
+                                {{ order.quantity }}
+                                {% set sumQuantity = sumQuantity + order.quantity %}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="animated-background">
+                                {{ order.price }}
+                                {% set sumPrice = sumPrice + order.price %}
+                            </div>
+                        </td>
+                        <td class="attribute-price">
+                            <div class="animated-background">
+                                {{ order.order_date }}
+                            </div>
+                        </td>
+                </tr>
+        {% endfor %}
+            <tr class="combination loading timeline-wrapper" id="loading-attribute">
+              <td class="timeline-item" width="1%">
+                    <strong>{{ allOrders }}</strong>
+              </td>
+              <td class="timeline-item img">
+                <div class="animated-background">
+                    
+                </div>
+              </td>
+              <td class="timeline-item img">
+                <div class="animated-background">
+                    
+                </div>
+              </td>
+              <td class="timeline-item img">
+                <div class="animated-background">
+                    <strong>{{ sumQuantity }}</strong>
+                </div>
+              </td>
+              <td>
+                <div class="animated-background">
+                    <strong>{{ sumPrice }}</strong>
+                </div>
+              </td>
+              <td class="attribute-price">
+                <div class="animated-background">
+                </div>
+              </td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

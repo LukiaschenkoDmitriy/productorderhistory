@@ -1,0 +1,19 @@
+services:
+  _defaults:
+    public: true
+
+  prestashop.module.productorderhistory.form.type.orderhistorytype:
+    class: 'PrestaShop\Module\ProductOrderHistory\Form\OrderHistoryType'
+    parent: "form.type.translatable.aware"
+    public: true
+    tags:
+      - { name: form.type }
+
+  prestashop.module.productorderhistory.form.type.extensions.editproducttype:
+    class: 'PrestaShop\Module\ProductOrderHistory\Form\EditProductFormTypeExtension'
+    public: true
+    tags:
+      - {
+          name: form.type_extension,
+          extended_type: PrestaShopBundle\Form\Admin\Sell\Product\EditProductFormType,
+        }
